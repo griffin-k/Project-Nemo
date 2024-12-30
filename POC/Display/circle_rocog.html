@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Visualization</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let mic;
+
+        function setup() {
+            createCanvas(400, 400);
+            mic = new p5.AudioIn();
+            mic.start();
+            console.log("Microphone started");
+        }
+
+        function draw() {
+            background(0);
+            let vol = mic.getLevel();
+            console.log("Volume level: ", vol);
+            let diameter = map(vol, 0, 1, 50, 200);
+            noStroke();
+            fill(0, 0, 255, 100);
+            ellipse(width / 2, height / 2, diameter, diameter);
+        }
+    </script>
+</body>
+</html>
