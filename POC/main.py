@@ -8,11 +8,11 @@ from Engine.DG import speak
 
 def run_voice_assistant():
     print("Voice Assistant is ready. Say 'exit' to stop.")
-    listener = SpeechToTextListener(language="en-IN")
+    listener = SpeechToTextListener(language="en-US")
     listener.initialize_browser()
 
     while True:
-        user_message = listener.listen(prints=True)  
+        user_message = listener.listen(prints=True)
         if user_message.lower() == 'exit':  
             print("Exiting the voice assistant.")
             break

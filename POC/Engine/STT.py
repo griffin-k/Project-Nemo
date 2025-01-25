@@ -1,3 +1,4 @@
+import pygame
 from typing import Optional
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -12,10 +13,13 @@ class SpeechToTextListener:
             self, 
             website_path: str = "https://realtime-stt-devs-do-code.netlify.app/", 
             language: str = "en-IN",  
-            wait_time: int = 10):
+            wait_time: int = 10,
+            sound_file: str = "start_listening.mp3"):  # Path to the MP3 file
         
         self.website_path = website_path
         self.language = language
+        self.wait_time = wait_time
+        self.sound_file = sound_file
         self.chrome_options = Options()
         self.chrome_options.add_argument("--use-fake-ui-for-media-stream")
         self.chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
@@ -27,6 +31,10 @@ class SpeechToTextListener:
         self.wait = None
         self.is_initialized = False
         self.recognized_text = ""
+
+        # Initialize pygame for playing sound
+        pygame.mixer.init()
+        pygame.mixer.music.load(self.sound_file)  # Load MP3 file for playback
 
     def initialize_browser(self):
         """Initialize the browser once."""
@@ -41,6 +49,10 @@ class SpeechToTextListener:
             self.is_initialized = True
         else:
             print("Browser already initialized. Reusing the current session.")
+
+    def play_start_sound(self):
+        """Play the sound when listening starts."""
+        pygame.mixer.music.play()
 
     def stream(self, content: str):
         """Display the user's speech text in real-time."""
@@ -77,6 +89,10 @@ class SpeechToTextListener:
             self.initialize_browser()
 
         self.select_language()  # Re-ensure correct language selection before starting transcription
+
+        # Play the sound when starting to listen
+        self.play_start_sound()
+
         self.driver.find_element(By.ID, "click_to_record").click()
 
         is_recording = self.wait.until(

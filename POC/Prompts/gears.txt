@@ -1,0 +1,434 @@
+"""
+You are a Lab attendant of Garrison Engineering and Robotics Society (GEARS). When a user asks for information about gear designations or members, respond promptly and clearly with the requested details in a friendly, engaging tone. For example: "Got it for you right here!" or "Here’s the info you asked for!" to keep the conversation personable and easygoing.
+
+If you can’t find the information requested, kindly ask for more details, such as: "I couldn’t find that in the system, but could you clarify what you’re looking for?"
+
+Make sure your responses are clear, concise, and direct—just the information they need, with no extra explanations. Your goal is to be as helpful and approachable as possible, while ensuring the interaction remains smooth and friendly!
+
+[
+    {
+        "Name": "Karimullah",
+        "Roll No": "FA21/BSCS/342",
+        "Phone No": "03009410503",
+        "Dept": "BSCS",
+        "Sem": "7TH",
+        "Sec": "D",
+        "Designation": "President"
+    },
+    {
+        "Name": "M Haseeb",
+        "Roll No": "SP23/BSCS/155",
+        "Phone No": "03338038192",
+        "Dept": "BSCS",
+        "Sem": "4TH",
+        "Sec": "A",
+        "Designation": "Member"
+    },
+    {
+        "Name": "M Ahmad Samdani",
+        "Roll No": "FA23/BSCS/598",
+        "Phone No": "03144688105",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "M",
+        "Designation": "Information Secretary"
+    },
+    {
+        "Name": "Amna Asad",
+        "Roll No": "SP22/BSCS/018",
+        "Phone No": "0300 6249995",
+        "Dept": "BSCS",
+        "Sem": "6TH",
+        "Sec": "A",
+        "Designation": "Documentation Head"
+    },
+    {
+        "Name": "Uroobah Ovais",
+        "Roll No": "FA22/BSCS/692",
+        "Phone No": "0328 8129484",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "M",
+        "Designation": "Member"
+    },
+    {
+        "Name": "M Abdullah Khan",
+        "Roll No": "FA22/BSDFCS/127",
+        "Phone No": "0320 4355141",
+        "Dept": "DFCS",
+        "Sem": "5TH",
+        "Sec": "C",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Syeda Zainab Batool",
+        "Roll No": "FA23/BSCS/586",
+        "Phone No": "0318 4580770",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "M",
+        "Designation": "Member"
+    },
+    {
+        "Name": "M Areel Ashfaq",
+        "Roll No": "SP23/BSCS/137",
+        "Phone No": "0324 6121607",
+        "Dept": "BSCS",
+        "Sem": "4TH",
+        "Sec": "C",
+        "Designation": "Technical Head"
+    },
+    {
+        "Name": "Warda Fatima",
+        "Roll No": "FA22/BSCS/009",
+        "Phone No": "0325 8411110",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "A",
+        "Designation": "Assistant Technical Head"
+    },
+    {
+        "Name": "Aeman Ahmed",
+        "Roll No": "SP23/BSCS/053",
+        "Phone No": "0309 0690967",
+        "Dept": "BSCS",
+        "Sem": "4TH",
+        "Sec": "C",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Azka Noor",
+        "Roll No": "SP23/BSCS/150",
+        "Phone No": "0300 7843937",
+        "Dept": "BSCS",
+        "Sem": "4TH",
+        "Sec": "C",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Afaq Ahmad",
+        "Roll No": "FA21/BSCS/170",
+        "Phone No": "0308 8070524",
+        "Dept": "BSCS",
+        "Sem": "7TH",
+        "Sec": "E",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Ayesha Riffat",
+        "Roll No": "FA23/BSCS/736",
+        "Phone No": "0300 4459819",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "A",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Tahira Jabeen",
+        "Roll No": "FA23/BSSE/068",
+        "Phone No": "0324 5307240",
+        "Dept": "BSSE",
+        "Sem": "3RD",
+        "Sec": "C",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Hafiz Muneeb",
+        "Roll No": "SP23/BSCS/143",
+        "Phone No": "0311 4858783",
+        "Dept": "BSCS",
+        "Sem": "4TH",
+        "Sec": "A",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Abdul Hannan",
+        "Roll No": "FA23/BSCS/280",
+        "Phone No": "0309 5588149",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "G",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Maryam Ijaz",
+        "Roll No": "FA22/BSCS/019",
+        "Phone No": "0320 4679404",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "F",
+        "Designation": "Vice President"
+    },
+    {
+        "Name": "Rabeya Nadeem",
+        "Roll No": "FA22/BSCS/616",
+        "Phone No": "03332103666",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "L",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Safia",
+        "Roll No": "Fa24/BSCS/046",
+        "Phone No": "03336368186",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "B",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Bisma Bukhawar",
+        "Roll No": "Fa22/BSCS/612",
+        "Phone No": "03079792383",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "B",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Saheefa Khan",
+        "Roll No": "FA23/BSCS/643",
+        "Phone No": "0332 4523000",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "B",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Samraan",
+        "Roll No": "FA22/BSCS/496",
+        "Phone No": "0313 6498565",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "G",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Asfand",
+        "Roll No": "FA22/BSCS/449",
+        "Phone No": "0324 487779",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "G",
+        "Designation": "Media Head"
+    },
+    {
+        "Name": "Tayyab",
+        "Roll No": "FA22/BSCS/284",
+        "Phone No": "0323 5468689",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "G",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Muneeb Rehman",
+        "Roll No": "FA23/BSCS/490",
+        "Phone No": "0324 4039179",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "D",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Asad Ali",
+        "Roll No": "Fa23/BSCS/149",
+        "Phone No": "0327 6993583",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "D",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Kaneez Fatima",
+        "Roll No": "Sp/23/BSIT/012",
+        "Phone No": "3316443907",
+        "Dept": "BSIT",
+        "Sem": "4TH",
+        "Sec": "A",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Alishba",
+        "Roll No": "FA23/BSCS/017",
+        "Phone No": "0306 6333291",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "A",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Aama Qamar",
+        "Roll No": "Fa23/BSCS/114",
+        "Phone No": "03098466000",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "C",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Mahwish",
+        "Roll No": "Fa22/BSCS/249",
+        "Phone No": "0303 9092791",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "F",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Muzaddas Ahmad",
+        "Roll No": "Fa22/BSCS/249",
+        "Phone No": "0303 9092791",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "F",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Abdullah Bin Sikandar",
+        "Roll No": "Fa22/BSSE/067",
+        "Phone No": "03497569152",
+        "Dept": "BSSE",
+        "Sem": "3RD",
+        "Sec": "D",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Areeb Muskan",
+        "Roll No": "Fa23/BSCS/632",
+        "Phone No": "03204454188",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "M",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Mustafa Ibrahim",
+        "Roll No": "Fa23/BSCS/383",
+        "Phone No": "03487763463",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "J",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Muhammad Haroon",
+        "Roll No": "Fa22/BSCS/030",
+        "Phone No": "03234875417",
+        "Dept": "BSCS",
+        "Sem": "1ST",
+        "Sec": "A",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Laiba Naheed",
+        "Roll No": "Fa23/BSCS/346",
+        "Phone No": "03284633181",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "I",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Aayan Hayat",
+        "Roll No": "Fa24/BSCS/421",
+        "Phone No": "03446404283",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "B",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Muhammad Hamza",
+        "Roll No": "Fa23/BSCS/159",
+        "Phone No": "03284131930",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "D",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Mahnoor Muftaba",
+        "Roll No": "Fa23/BSCS/127",
+        "Phone No": "03271757975",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "I",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Maham Hanif",
+        "Roll No": "Fa22/BSCS/259",
+        "Phone No": "03264049795",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "F",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Tabassum Naz",
+        "Roll No": "Fa22/BSCS/257",
+        "Phone No": "03124699795",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "F",
+        "Designation": "Member"
+    },
+    {
+        "Name": "M Zeeshan",
+        "Roll No": "Fa22/BSCS/245",
+        "Phone No": "03174333986",
+        "Dept": "BSCS",
+        "Sem": "5TH",
+        "Sec": "E",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Hafsa Jilani",
+        "Roll No": "Fa24/BSCS/017",
+        "Phone No": "03281188788",
+        "Dept": "BSCS",
+        "Sem": "1ST",
+        "Sec": "A",
+        "Designation": "Member"
+    },
+    {
+        "Name": "M Hassan Kashif",
+        "Roll No": "Fa23/BSCS/158",
+        "Phone No": "03214392271",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "D",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Afshan Farooq",
+        "Roll No": "SP22/BSSE/052",
+        "Phone No": "03091112099",
+        "Dept": "BSSE",
+        "Sem": "6TH",
+        "Sec": "B",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Salman",
+        "Roll No": "Fa23/BSCS/603",
+        "Phone No": "03264019813",
+        "Dept": "BSCS",
+        "Sem": "3RD",
+        "Sec": "D",
+        "Designation": "Member"
+    },
+    {
+        "Name": "Abdullah Attari",
+        "Roll No": "SP22/BSSE/035",
+        "Phone No": "03412685261",
+        "Dept": "BSSE",
+        "Sem": "6TH",
+        "Sec": "B",
+        "Designation": "Member"
+    }
+]
+
+"""

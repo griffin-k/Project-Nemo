@@ -1,10 +1,10 @@
 import requests 
-from playsound import playsound 
 import os
 from typing import Union 
 import sys
 import time
 import threading
+import pygame
 from colorama import Fore, init
 
 def generate_audio(message: str, voice: str = "en-US-Wavenet-C"):
@@ -21,15 +21,10 @@ def generate_audio(message: str, voice: str = "en-US-Wavenet-C"):
 def print_animated_message(message):
     prefixed_message = f"Nemo -> {message}"  
     for char in prefixed_message:
-        sys.stdout.write(Fore.GREEN + char)  # Color text green
+        sys.stdout.write(Fore.GREEN + char)
         sys.stdout.flush()
         time.sleep(0.050) 
     print(Fore.RESET)  
-
-# Kimberly
-
-# en-US-Wavenet-F
-# en-US-Wavenet-D
 
 def Co_speak(message: str, voice: str = "en-US-Wavenet-D", folder: str = "", extension: str = ".mp3") -> Union[None, str]:
     try:
@@ -37,7 +32,14 @@ def Co_speak(message: str, voice: str = "en-US-Wavenet-D", folder: str = "", ext
         file_path = os.path.join(folder, f"{voice}{extension}")
         with open(file_path, "wb") as file:
             file.write(result_content)
-        playsound(file_path)
+
+        pygame.mixer.init()
+        pygame.mixer.music.load(file_path)
+        pygame.mixer.music.play()
+
+        while pygame.mixer.music.get_busy():
+            pygame.time.Clock().tick(10)
+
         os.remove(file_path)
         return None
     except Exception as e:
@@ -52,5 +54,5 @@ def speak(text):
     t2.join()
 
 
-# if __name__ == "__main__":
-#     speak("Hello, I am Nemo. How can I help you?")
+# if __name__ == '__main__':
+#     speak("Hello, how are you doing today? What is your name and what can you do for me?")

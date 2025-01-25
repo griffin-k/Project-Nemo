@@ -1,108 +1,90 @@
 import requests
-import pygame
+import json
 import os
-from typing import Union
-import sys
+from groq import Groq
+from googlesearch import search
+from dotenv import load_dotenv
 import time
-import threading
-from colorama import Fore, init
-import base64
+# Load environment variables from .env file
+load_dotenv()
 
-def generate_audio(message: str, model: str = "aura-asteria-en") -> Union[None, bytes]:
-    """
-    Calls the Deepgram API to generate audio from text.
-    """
-    url = "https://deepgram.com/api/ttsAudioGeneration"
-    headers = {
-        "Content-Type": "application/json",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+def get_web_info(query, max_results=6, prints=False) -> str:
+    results = []
+    for link in search(query, num_results=max_results):
+        results.append({"link": link.url, "title": link.title, "description": link.description})
+        time.sleep(2)  # Add a 1-second delay between requests
+    return json.dumps(results)
+
+def generate(user_prompt, system_prompt="Be Short and Concise", prints=False) -> str:
+
+    function_descriptions = {
+        "type": "function",
+        "function": {
+            "name": "get_web_info",
+            "description": "Gets real-time information about the query",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The query to search on the web",
+                    },
+                },
+                "required": ["query"],
+            },
+        },
     }
-    payload = {"text": message, "model": model}
 
-    try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-        
-        response_json = response.json()
-        
-        if 'data' in response_json:
-            return base64.b64decode(response_json['data'])
-        else:
-            print(f"Error: 'data' key not found in response: {response_json}")
-            return None
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ]
 
-    except requests.exceptions.RequestException as e:
-        print(f"Error during API request: {e}")
-        return None
+    api_key = os.environ.get("GROQ_API_KEY")
+    response = Groq(api_key=api_key).chat.completions.create(
+        model='llama3-70b-8192',
+        messages=messages,
+        tools=[function_descriptions],
+        tool_choice="auto",
+        max_tokens=4096
+    )
 
-def print_animated_message(message):
-    prefixed_message = f"Nemo -> {message}"  
-    for char in prefixed_message:
-        sys.stdout.write(Fore.GREEN + char)  # Color text green
-        sys.stdout.flush()
-        time.sleep(0.050) 
-    print(Fore.RESET)  
+    response_message = response.choices[0].message
+    if prints: print(f"Initial Response: {response_message} \n")
+    tool_calls = response_message.tool_calls
 
-def save_audio(audio_content: bytes, folder: str = "", filename: str = "output.mp3") -> Union[None, str]:
-    if not audio_content:
-        print("No audio content to save.")
-        return None
+    if tool_calls:
+        available_functions = {
+            "get_web_info": get_web_info,
+        }
 
-    try:
-        file_path = os.path.join(folder, filename)
-        with open(file_path, 'wb') as audio_file:
-            audio_file.write(audio_content)
-        # print(f"Audio saved to: {file_path}")
-        return file_path
-    except Exception as e:
-        print(f"Error saving audio to file: {e}")
-        return None
+        messages.append(response_message)
+        for tool_call in tool_calls:
+            function_name = tool_call.function.name
+            function_to_call = available_functions[function_name]
+            function_args = json.loads(tool_call.function.arguments)
+            function_response = function_to_call(**function_args)
 
-def Co_speak(message: str, voice: str = "aura-stella-en", folder: str = "", extension: str = ".mp3") -> Union[None, str]:
-    """
-    aura-asteria-en
-    aura-orpheus-en
-    aura-angus-en
-    aura-arcas-en
-    aura-athena-en
-    aura-helios-en
-    aura-hera-en
-    aura-luna-en
-    aura-zeus-en
-    aura-stella-en
-    aura-perseus-en
-    """
-    try:
-        result_content = generate_audio(message, voice)
-        if result_content is None:
-            return None
-        
-        file_path = save_audio(result_content, folder, f"{voice}{extension}")
-        if file_path:
-            # Initialize the pygame mixer
-            pygame.mixer.init()
+            messages.append({
+                "tool_call_id": tool_call.id,
+                "role": "tool",
+                "name": function_name,
+                "content": function_response,
+            })
 
-            # Load and play the audio using pygame
-            pygame.mixer.music.load(file_path)
-            pygame.mixer.music.play()
-            
-            # Wait until the music is finished playing
-            while pygame.mixer.music.get_busy(): 
-                pygame.time.Clock().tick(10)
-
-            os.remove(file_path)  # Remove the file after playing
-        return None
-    except Exception as e:
-        print(e)
-
-def speak(text: str):
-    t1 = threading.Thread(target=Co_speak, args=(text,))
-    t2 = threading.Thread(target=print_animated_message, args=(text,))
-    t1.start()
-    t2.start()
-    t1.join()
-    t2.join()
+        second_response = Groq(api_key=api_key).chat.completions.create(
+            model='llama3-70b-8192',
+            messages=messages
+        )
+        return second_response.choices[0].message.content
+    else:
+        return response.choices[0].message.content
 
 
 if __name__ == "__main__":
-    speak("This structure keeps your code modular and reusable while adding a smooth, simultaneous display of text and voice synthesis.")
+
+    # response = generate(user_prompt = "when is IPL 2024 starting  ", prints = True)
+    # response = generate(user_prompt = "when is the election 2024 starting and ending. how much money is spend on the elctions 2024 in India", prints = True)
+    response = generate(user_prompt = "Search the web for GPT-5 release date and features", prints = True, system_prompt='Be Short and Concise')
+    
+    print("Final Response:\n", response)

@@ -10,7 +10,7 @@ class SpeechToTextListener:
     def __init__(
             self, 
             website_path: str = "https://realtime-stt-devs-do-code.netlify.app/", 
-            language: str = "en-IN",  
+            language: str = "en-US",  
             wait_time: int = 10):
         
         self.website_path = website_path
