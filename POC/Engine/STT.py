@@ -14,7 +14,7 @@ class SpeechToTextListener:
             website_path: str = "https://realtime-stt-devs-do-code.netlify.app/", 
             language: str = "en-IN",  
             wait_time: int = 10,
-            sound_file: str = "start_listening.mp3"):  # Path to the MP3 file
+            sound_file: str = "Assets/on.mp3"):  # Path to the MP3 file
         
         self.website_path = website_path
         self.language = language

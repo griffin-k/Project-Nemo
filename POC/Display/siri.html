@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siri-Like Plasma Animation</title>
+<style>
+  body {
+    margin: 0;
+    background: radial-gradient(#000000, #050505);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .orb-container {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 200, 255, 0.4), 0 0 80px rgba(255, 50, 255, 0.2);
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(8px);
+  }
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+  }
+  .center-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="orb-container">
+  <canvas id="plasmaCanvas"></canvas>
+  <div class="center-glow"></div>
+</div>
+
+<script>
+const canvas = document.getElementById('plasmaCanvas');
+const ctx = canvas.getContext('2d');
+let width, height;
+
+function resize() {
+  width = canvas.width = canvas.offsetWidth;
+  height = canvas.height = canvas.offsetHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Blob {
+  constructor(x, y, r, color, speed) {
+    this.x = x;
+    this.y = y;
+    this.r = r;
+    this.color = color;
+    this.speedX = (Math.random() - 0.5) * speed;
+    this.speedY = (Math.random() - 0.5) * speed;
+  }
+  move() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x - this.r < 0 || this.x + this.r > width) this.speedX *= -1;
+    if (this.y - this.r < 0 || this.y + this.r > height) this.speedY *= -1;
+  }
+  draw(ctx) {
+    const gradient = ctx.createRadialGradient(this.x, this.y, this.r * 0.2, this.x, this.y, this.r);
+    gradient.addColorStop(0, this.color);
+    gradient.addColorStop(1, 'transparent');
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+const blobs = [
+  new Blob(width/2, height/2, 50, 'rgba(0,200,255,0.7)', 1.5),
+  new Blob(width/3, height/2, 40, 'rgba(255,54,240,0.7)', 1.2),
+  new Blob(width/1.5, height/2.5, 30, 'rgba(57,255,20,0.7)', 1),
+];
+
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(width/2, height/2, width/2, 0, Math.PI * 2);
+  ctx.clip();
+
+  blobs.forEach(blob => {
+    blob.move();
+    blob.draw(ctx);
+  });
+
+  ctx.restore();
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

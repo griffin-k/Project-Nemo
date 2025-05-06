@@ -16,3 +16,7 @@ def generate(prompt):
         print("Image saved as 'generated_image.png'")
     else:
         print(f"Error: {response.status_code}, {response.text}")
+
+if __name__ == "__main__":
+    prompt = input("Enter a prompt: ")
+    generate(prompt)

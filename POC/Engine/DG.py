@@ -81,5 +81,4 @@ def speak(text: str):
     t1.join()
     t2.join()
 
-if __name__ == "__main__":
-    speak("This structure keeps your code modular and reusable while adding a smooth, simultaneous display of text and voice synthesis.")
+# if __name__ == "__main__":
